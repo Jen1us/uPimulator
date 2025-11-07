@@ -110,3 +110,6 @@ We appreciate their commitment to advancing research in this field.
 
 ## 📔 Citation
 Bongjoon Hyun, Taehun Kim, Dongjae Lee, and Minsoo Rhu, "[Pathfinding Future PIM Architectures by Demystifying a Commercial PIM Technology](https://www.computer.org/csdl/proceedings-article/hpca/2024/931300a263/1VOAAZSdy0w)", IEEE International Symposium on High-Performance Computer Architecture (HPCA), March 2024.
+
+
+./build/uPIMulator --platform_mode chiplet --benchmark TRANSFORMER --root_dirpath /Users/Jenius/Projects/CIMDi/2025.09/Evaluation/uPIMulator/golang/uPIMulator --bin_dirpath /Users/Jenius/Projects/CIMDi/2025.09/Evaluation/uPIMulator/golang/uPIMulator/bin --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 --num_tasklets 4

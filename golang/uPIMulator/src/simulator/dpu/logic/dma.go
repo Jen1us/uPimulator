@@ -9,11 +9,28 @@ import (
 	"uPIMulator/src/simulator/dpu/sram"
 )
 
+type MemoryController interface {
+	CanPush() bool
+	Push(*dram.DmaCommand)
+	CanPop() bool
+	Pop() *dram.DmaCommand
+	IsEmpty() bool
+	Flush()
+	Read(int64, int64) *encoding.ByteStream
+	Write(int64, int64, *encoding.ByteStream)
+	Cycle()
+	StatFactory() *misc.StatFactory
+	MemorySchedulerStatFactory() *misc.StatFactory
+	RowBufferStatFactory() *misc.StatFactory
+	StageActivations([]float32)
+	ExecuteCim(int) float32
+}
+
 type Dma struct {
 	atomic            *sram.Atomic
 	iram              *sram.Iram
 	operand_collector *OperandCollector
-	memory_controller *dram.MemoryController
+	memory_controller MemoryController
 
 	input_q *dram.DmaCommandQ
 	ready_q *dram.DmaCommandQ
@@ -69,7 +86,7 @@ func (this *Dma) ConnectOperandCollector(operand_collector *OperandCollector) {
 	this.operand_collector = operand_collector
 }
 
-func (this *Dma) ConnectMemoryController(memory_controller *dram.MemoryController) {
+func (this *Dma) ConnectMemoryController(memory_controller MemoryController) {
 	if this.memory_controller != nil {
 		err := errors.New("memory controller is already set")
 		panic(err)

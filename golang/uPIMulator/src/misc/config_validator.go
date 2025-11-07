@@ -38,6 +38,11 @@ func (this *ConfigValidator) Validate() {
 		panic(err)
 	}
 
+	if this.config_loader.RramDataWidth() <= 0 {
+		err := errors.New("RRAM data width <= 0")
+		panic(err)
+	}
+
 	if this.config_loader.AtomicOffset() < 0 {
 		err := errors.New("atomic offset < 0")
 		panic(err)
@@ -55,6 +60,11 @@ func (this *ConfigValidator) Validate() {
 
 	if this.config_loader.MramOffset() < 0 {
 		err := errors.New("MRAM offset < 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramOffset() < 0 {
+		err := errors.New("RRAM offset < 0")
 		panic(err)
 	}
 
@@ -78,6 +88,11 @@ func (this *ConfigValidator) Validate() {
 		panic(err)
 	}
 
+	if this.config_loader.RramSize() <= 0 {
+		err := errors.New("RRAM size <= 0")
+		panic(err)
+	}
+
 	if this.AreOverlapped(
 		this.config_loader.AtomicOffset(),
 		this.config_loader.AtomicSize(),
@@ -98,14 +113,16 @@ func (this *ConfigValidator) Validate() {
 		panic(err)
 	}
 
-	if this.AreOverlapped(
-		this.config_loader.AtomicOffset(),
-		this.config_loader.AtomicSize(),
-		this.config_loader.MramOffset(),
-		this.config_loader.MramSize(),
-	) {
-		err := errors.New("atomic and MRAM are overlapped")
-		panic(err)
+	if this.config_loader.MemoryType() != "rram" {
+		if this.AreOverlapped(
+			this.config_loader.AtomicOffset(),
+			this.config_loader.AtomicSize(),
+			this.config_loader.MramOffset(),
+			this.config_loader.MramSize(),
+		) {
+			err := errors.New("atomic and MRAM are overlapped")
+			panic(err)
+		}
 	}
 
 	if this.AreOverlapped(
@@ -118,24 +135,70 @@ func (this *ConfigValidator) Validate() {
 		panic(err)
 	}
 
+	if this.config_loader.MemoryType() != "rram" {
+		if this.AreOverlapped(
+			this.config_loader.IramOffset(),
+			this.config_loader.IramSize(),
+			this.config_loader.MramOffset(),
+			this.config_loader.MramSize(),
+		) {
+			err := errors.New("IRAM and MRAM are overlapped")
+			panic(err)
+		}
+	}
+
+	if this.config_loader.MemoryType() != "rram" {
+		if this.AreOverlapped(
+			this.config_loader.WramOffset(),
+			this.config_loader.WramSize(),
+			this.config_loader.MramOffset(),
+			this.config_loader.MramSize(),
+		) {
+			err := errors.New("WRAM and MRAM are overlapped")
+			panic(err)
+		}
+	}
+
+	if this.AreOverlapped(
+		this.config_loader.AtomicOffset(),
+		this.config_loader.AtomicSize(),
+		this.config_loader.RramOffset(),
+		this.config_loader.RramSize(),
+	) {
+		err := errors.New("atomic and RRAM are overlapped")
+		panic(err)
+	}
+
 	if this.AreOverlapped(
 		this.config_loader.IramOffset(),
 		this.config_loader.IramSize(),
-		this.config_loader.MramOffset(),
-		this.config_loader.MramSize(),
+		this.config_loader.RramOffset(),
+		this.config_loader.RramSize(),
 	) {
-		err := errors.New("IRAM and MRAM are overlapped")
+		err := errors.New("IRAM and RRAM are overlapped")
 		panic(err)
 	}
 
 	if this.AreOverlapped(
 		this.config_loader.WramOffset(),
 		this.config_loader.WramSize(),
-		this.config_loader.MramOffset(),
-		this.config_loader.MramSize(),
+		this.config_loader.RramOffset(),
+		this.config_loader.RramSize(),
 	) {
-		err := errors.New("WRAM and MRAM are overlapped")
+		err := errors.New("WRAM and RRAM are overlapped")
 		panic(err)
+	}
+
+	if this.config_loader.MemoryType() != "rram" {
+		if this.AreOverlapped(
+			this.config_loader.MramOffset(),
+			this.config_loader.MramSize(),
+			this.config_loader.RramOffset(),
+			this.config_loader.RramSize(),
+		) {
+			err := errors.New("MRAM and RRAM are overlapped")
+			panic(err)
+		}
 	}
 
 	if this.config_loader.StackSize() <= 0 {
@@ -155,6 +218,36 @@ func (this *ConfigValidator) Validate() {
 
 	if this.config_loader.MaxNumTasklets() <= 0 {
 		err := errors.New("max num tasklets <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramArrayRows() <= 0 {
+		err := errors.New("RRAM array rows <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramArrayCols() <= 0 {
+		err := errors.New("RRAM array cols <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramCellPrecision() <= 0 {
+		err := errors.New("RRAM cell precision <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramReadLatency() <= 0 {
+		err := errors.New("RRAM read latency <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramWriteLatency() <= 0 {
+		err := errors.New("RRAM write latency <= 0")
+		panic(err)
+	}
+
+	if this.config_loader.RramProgramPulses() <= 0 {
+		err := errors.New("RRAM program pulses <= 0")
 		panic(err)
 	}
 }

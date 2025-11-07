@@ -31,6 +31,31 @@ if __name__ == "__main__":
             build_dir_path,
             "-G",
             "Ninja",
-        ]
+        ],
+        check=True,
     )
-    subprocess.run(["ninja", "-C", build_dir_path])
+
+    benchmarks = []
+    for entry in os.listdir(benchmark_dir_path):
+        entry_path = os.path.join(benchmark_dir_path, entry)
+        if not os.path.isdir(entry_path):
+            continue
+        if entry == "build":
+            continue
+        dpu_task_path = os.path.join(entry_path, "dpu", "task.c")
+        if os.path.exists(dpu_task_path):
+            benchmarks.append(entry)
+
+    for benchmark in benchmarks:
+        target = os.path.join(
+            benchmark,
+            "dpu",
+            "CMakeFiles",
+            f"{benchmark}_device.dir",
+            "task.c.o",
+        )
+        target_path = os.path.join(build_dir_path, target)
+        if not os.path.exists(target_path) and benchmark.upper() == "TRANSFORMER":
+            # Chiplet-only benchmarks may not have device binaries.
+            continue
+        subprocess.run(["ninja", "-C", build_dir_path, target], check=True)

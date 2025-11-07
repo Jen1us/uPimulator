@@ -25,7 +25,7 @@ func (this *CommandLineParser) AddOption(
 	help_msg string,
 ) {
 	if _, found := this.command_line_options[option]; found {
-		err_msg := fmt.Sprintf("option (%s) is already added to the parser")
+		err_msg := fmt.Sprintf("option (%s) is already added to the parser", option)
 		err := errors.New(err_msg)
 		panic(err)
 	}
@@ -41,6 +41,17 @@ func (this *CommandLineParser) Parse(os_args []string) {
 
 		if os_arg[0:2] == "--" {
 			option := os_arg[2:]
+			if _, found := this.command_line_options[option]; !found {
+				err_msg := fmt.Sprintf("option (%s) is not registered", option)
+				err := errors.New(err_msg)
+				panic(err)
+			}
+
+			if i+1 >= len(os_args) {
+				err := errors.New("option does not have a parameter")
+				panic(err)
+			}
+
 			custom_parameter := os_args[i+1]
 
 			this.command_line_options[option].SetCustomParameter(custom_parameter)

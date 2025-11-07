@@ -1,0 +1,51 @@
+{
+  "kernels": [
+    {
+      "name": "token_prep",
+      "opcode": "pe_cmd_token_prep",
+      "target": "digital"
+    },
+    {
+      "name": "gemm_tile",
+      "opcode": "pe_cmd_gemm",
+      "target": "digital"
+    },
+    {
+      "name": "attention_head",
+      "opcode": "pe_cmd_attention_head",
+      "target": "digital"
+    },
+    {
+      "name": "elementwise_post",
+      "opcode": "pe_cmd_elementwise",
+      "target": "digital"
+    },
+    {
+      "name": "rram_stage",
+      "opcode": "rram_cmd_stage_act",
+      "target": "rram"
+    },
+    {
+      "name": "rram_execute",
+      "opcode": "rram_cmd_execute",
+      "target": "rram"
+    },
+    {
+      "name": "rram_post",
+      "opcode": "rram_cmd_post",
+      "target": "rram"
+    },
+    {
+      "direction": "digital_to_rram",
+      "name": "transfer_dr",
+      "opcode": "xfer_cmd_schedule",
+      "target": "transfer"
+    },
+    {
+      "direction": "rram_to_digital",
+      "name": "transfer_rd",
+      "opcode": "xfer_cmd_schedule",
+      "target": "transfer"
+    }
+  ]
+}

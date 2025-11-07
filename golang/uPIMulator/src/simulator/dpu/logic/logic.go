@@ -5003,10 +5003,27 @@ func (this *Logic) ExecuteDmaRri(instruction_ *instruction.Instruction) {
 		this.ExecuteLdmaiDmaRri(instruction_)
 	} else if _, is_sdma_dma_rri_op_code := instruction_.SdmaDmaRriOpCodes()[op_code]; is_sdma_dma_rri_op_code {
 		this.ExecuteSdmaDmaRri(instruction_)
+	} else if _, is_rram_load_op_code := instruction_.RramLoadDmaRriOpCodes()[op_code]; is_rram_load_op_code {
+		this.ExecuteRramLoadDmaRri(instruction_)
+	} else if _, is_rram_cim_op_code := instruction_.RramCimDmaRriOpCodes()[op_code]; is_rram_cim_op_code {
+		this.ExecuteRramCimDmaRri(instruction_)
+	} else if _, is_pe_chiplet_op := instruction_.PeChipletDmaRriOpCodes()[op_code]; is_pe_chiplet_op {
+		this.ExecuteChipletCommandDmaRri(instruction_)
+	} else if _, is_rram_chiplet_op := instruction_.RramChipletDmaRriOpCodes()[op_code]; is_rram_chiplet_op {
+		this.ExecuteChipletCommandDmaRri(instruction_)
+	} else if _, is_transfer_chiplet_op := instruction_.TransferChipletDmaRriOpCodes()[op_code]; is_transfer_chiplet_op {
+		this.ExecuteChipletCommandDmaRri(instruction_)
+	} else if _, is_sync_chiplet_op := instruction_.SyncChipletDmaRriOpCodes()[op_code]; is_sync_chiplet_op {
+		this.ExecuteChipletCommandDmaRri(instruction_)
 	} else {
 		err := errors.New("op code is not valid")
 		panic(err)
 	}
+}
+
+func (this *Logic) ExecuteChipletCommandDmaRri(instruction_ *instruction.Instruction) {
+	err := errors.New("chiplet DMA_RRI commands must be handled by the chiplet platform")
+	panic(err)
 }
 
 func (this *Logic) ExecuteLdmaDmaRri(instruction_ *instruction.Instruction) {
@@ -5080,6 +5097,77 @@ func (this *Logic) ExecuteSdmaDmaRri(instruction_ *instruction.Instruction) {
 	size := (1 + this.alu.And(imm+this.alu.And(this.alu.Lsr(ra, 24), 255), 255)) * this.min_access_granularity
 
 	this.dma.TransferFromWramToMram(wram_address, mram_address, size, instruction_)
+
+	thread.RegFile().ClearConditions()
+}
+
+func (this *Logic) ExecuteRramLoadDmaRri(instruction_ *instruction.Instruction) {
+	config_loader := new(misc.ConfigLoader)
+	config_loader.Init()
+
+	if config_loader.MemoryType() != "rram" {
+		err := errors.New("RRAM_LOAD_COL is only valid when memory_type=rram")
+		panic(err)
+	}
+
+	thread := this.scoreboard[instruction_]
+
+	ra := thread.RegFile().ReadSrcReg(instruction_.Ra(), word.SIGNED)
+	// rb currently reserved for future use
+	_ = thread.RegFile().ReadSrcReg(instruction_.Rb(), word.UNSIGNED)
+
+	rows := config_loader.RramArrayRows()
+
+	wram_end_address := config_loader.WramOffset() + config_loader.WramSize()
+	wram_end_address_width := int(math.Floor(math.Log2(float64(wram_end_address))) + 1)
+	wram_mask := this.Pow2(wram_end_address_width) - 1
+	wram_address := this.alu.And(ra, wram_mask)
+
+	activations := make([]float32, rows)
+	for i := 0; i < rows; i++ {
+		offset := wram_address + int64(i*2)
+		raw := uint16(this.operand_collector.Lhu(offset))
+		activations[i] = misc.Float16ToFloat32(raw)
+	}
+
+	this.dma.memory_controller.StageActivations(activations)
+
+	thread.RegFile().ClearConditions()
+}
+
+func (this *Logic) ExecuteRramCimDmaRri(instruction_ *instruction.Instruction) {
+	config_loader := new(misc.ConfigLoader)
+	config_loader.Init()
+
+	if config_loader.MemoryType() != "rram" {
+		err := errors.New("RRAM_CIM_MAC is only valid when memory_type=rram")
+		panic(err)
+	}
+
+	thread := this.scoreboard[instruction_]
+
+	ra := thread.RegFile().ReadSrcReg(instruction_.Ra(), word.SIGNED)
+	rb := thread.RegFile().ReadSrcReg(instruction_.Rb(), word.UNSIGNED)
+
+	column := int(rb)
+	if column < 0 || column+1 >= config_loader.RramArrayCols() {
+		err := errors.New("RRAM column index out of range")
+		panic(err)
+	}
+	if column%2 != 0 {
+		err := errors.New("RRAM column must reference the first column of a weight pair (even index)")
+		panic(err)
+	}
+
+	sum := this.dma.memory_controller.ExecuteCim(column)
+	resultHalf := misc.Float32ToFloat16(sum)
+
+	wram_end_address := config_loader.WramOffset() + config_loader.WramSize()
+	wram_end_address_width := int(math.Floor(math.Log2(float64(wram_end_address))) + 1)
+	wram_mask := this.Pow2(wram_end_address_width) - 1
+	wram_address := this.alu.And(ra, wram_mask)
+
+	this.operand_collector.Sh(wram_address, int64(resultHalf))
 
 	thread.RegFile().ClearConditions()
 }

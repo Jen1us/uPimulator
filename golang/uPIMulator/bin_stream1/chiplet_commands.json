@@ -1,0 +1,323 @@
+[
+  {
+    "id": 0,
+    "kind": 4,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 128,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 128,
+    "aux1": 128,
+    "aux2": 64,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 8
+  },
+  {
+    "id": 1,
+    "kind": 1,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 128,
+    "payload_addr": 128,
+    "payload_bytes": 128,
+    "aux0": 128,
+    "aux1": 128,
+    "aux2": 128,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 64,
+    "deps": [
+      0
+    ]
+  },
+  {
+    "id": 2,
+    "kind": 8,
+    "target": 2,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 65536,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 16,
+    "deps": [
+      1
+    ]
+  },
+  {
+    "id": 3,
+    "kind": 5,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 16,
+    "aux1": 128,
+    "aux2": 16,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 32,
+    "deps": [
+      2
+    ]
+  },
+  {
+    "id": 4,
+    "kind": 6,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 32,
+    "aux1": 128,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 64,
+    "deps": [
+      3
+    ]
+  },
+  {
+    "id": 5,
+    "kind": 7,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 12,
+    "flags": 0,
+    "latency": 12,
+    "deps": [
+      4
+    ]
+  },
+  {
+    "id": 6,
+    "kind": 8,
+    "target": 2,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 65536,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 1,
+    "latency": 16,
+    "deps": [
+      5
+    ]
+  },
+  {
+    "id": 7,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 128,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 128,
+    "aux1": 128,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 32,
+    "deps": [
+      6
+    ]
+  },
+  {
+    "id": 8,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 96,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 96,
+    "aux1": 64,
+    "aux2": 8,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 24,
+    "deps": [
+      7
+    ]
+  },
+  {
+    "id": 9,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 96,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 96,
+    "aux1": 32,
+    "aux2": 4,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 20,
+    "deps": [
+      0
+    ]
+  },
+  {
+    "id": 10,
+    "kind": 8,
+    "target": 2,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 49152,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 12,
+    "deps": [
+      1
+    ]
+  },
+  {
+    "id": 11,
+    "kind": 5,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 12,
+    "aux1": 96,
+    "aux2": 12,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 28,
+    "deps": [
+      2
+    ]
+  },
+  {
+    "id": 12,
+    "kind": 6,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 24,
+    "aux1": 96,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 56,
+    "deps": [
+      3
+    ]
+  },
+  {
+    "id": 13,
+    "kind": 7,
+    "target": 1,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 10,
+    "flags": 0,
+    "latency": 10,
+    "deps": [
+      4
+    ]
+  },
+  {
+    "id": 14,
+    "kind": 8,
+    "target": 2,
+    "chiplet_id": 0,
+    "queue": 0,
+    "payload_addr": 0,
+    "payload_bytes": 49152,
+    "aux0": 0,
+    "aux1": 0,
+    "aux2": 0,
+    "aux3": 0,
+    "flags": 1,
+    "latency": 12,
+    "deps": [
+      5
+    ]
+  },
+  {
+    "id": 15,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 96,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 96,
+    "aux1": 32,
+    "aux2": 4,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 22,
+    "deps": [
+      6
+    ]
+  },
+  {
+    "id": 16,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 128,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 128,
+    "aux1": 128,
+    "aux2": 8,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 20,
+    "deps": [
+      15
+    ]
+  },
+  {
+    "id": 17,
+    "kind": 3,
+    "target": 0,
+    "chiplet_id": -1,
+    "queue": 128,
+    "payload_addr": 0,
+    "payload_bytes": 0,
+    "aux0": 128,
+    "aux1": 128,
+    "aux2": 16,
+    "aux3": 0,
+    "flags": 0,
+    "latency": 18,
+    "deps": [
+      0
+    ]
+  }
+]

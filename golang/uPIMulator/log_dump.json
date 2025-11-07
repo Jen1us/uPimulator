@@ -1,0 +1,805 @@
+{
+  "entries": [
+    {
+      "ChipletPlatform_digital_store_bytes_total": "49408"
+    },
+    {
+      "ChipletPlatform_digital_scalar_ops_total": "2113664"
+    },
+    {
+      "ChipletPlatform_rram_postprocess_cycles_total": "2"
+    },
+    {
+      "ChipletPlatform_task_wait_cycles_total": "0"
+    },
+    {
+      "ChipletPlatform_digital_load_bytes_total": "98560"
+    },
+    {
+      "ChipletPlatform_interconnect_domain_cycles": "3000"
+    },
+    {
+      "ChipletPlatform_rram_results_recorded": "1"
+    },
+    {
+      "ChipletPlatform_transfer_bytes_total": "65536"
+    },
+    {
+      "ChipletPlatform_rram_tasks_total": "1"
+    },
+    {
+      "ChipletPlatform_digital_tasks_total": "3"
+    },
+    {
+      "ChipletPlatform_digital_vector_ops_total": "2105472"
+    },
+    {
+      "ChipletPlatform_digital_domain_cycles": "5000"
+    },
+    {
+      "ChipletPlatform_rram_domain_cycles": "4000"
+    },
+    {
+      "ChipletPlatform_transfer_tasks_total": "2"
+    },
+    {
+      "ChipletPlatform_rram_pulse_count_total": "6"
+    },
+    {
+      "ChipletPlatform_cycles": "5000"
+    },
+    {
+      "ChipletPlatform_rram_adc_samples_total": "12"
+    },
+    {
+      "ChipletPlatform_rram_preprocess_cycles_total": "6"
+    },
+    {
+      "ChipletPlatform_task_wait_samples": "6"
+    },
+    {
+      "ChipletPlatform_digital_tasks_total": "3"
+    },
+    {
+      "ChipletPlatform_rram_tasks_total": "1"
+    },
+    {
+      "ChipletPlatform_transfer_tasks_total": "2"
+    },
+    {
+      "ChipletPlatform_transfer_bytes_total": "65536"
+    },
+    {
+      "ChipletPlatform_digital_load_bytes_runtime_total": "98560"
+    },
+    {
+      "ChipletPlatform_digital_store_bytes_runtime_total": "49408"
+    },
+    {
+      "ChipletPlatform_digital_tasks_completed_total": "2"
+    },
+    {
+      "ChipletPlatform_digital_load_bytes_total": "98560"
+    },
+    {
+      "ChipletPlatform_digital_store_bytes_total": "49408"
+    },
+    {
+      "ChipletPlatform_digital_scalar_ops_total": "2113664"
+    },
+    {
+      "ChipletPlatform_digital_vector_ops_total": "2105472"
+    },
+    {
+      "ChipletPlatform_digital_domain_cycles": "5000"
+    },
+    {
+      "ChipletPlatform_rram_domain_cycles": "4000"
+    },
+    {
+      "ChipletPlatform_interconnect_domain_cycles": "3000"
+    },
+    {
+      "ChipletPlatform_digital_clock_mhz": "1000"
+    },
+    {
+      "ChipletPlatform_rram_clock_mhz": "800"
+    },
+    {
+      "ChipletPlatform_interconnect_clock_mhz": "600"
+    },
+    {
+      "ChipletPlatform_max_wait_cycles": "0"
+    },
+    {
+      "ChipletPlatform_max_digital_throughput": "1"
+    },
+    {
+      "ChipletPlatform_max_rram_throughput": "1"
+    },
+    {
+      "ChipletPlatform_max_transfer_throughput": "1"
+    },
+    {
+      "ChipletPlatform_avg_wait_cycles": "0.00"
+    },
+    {
+      "DigitalChiplet[0]_executed_tasks": "0"
+    },
+    {
+      "DigitalChiplet[0]_pending_cycles": "11404"
+    },
+    {
+      "DigitalChiplet[0]_busy_cycles": "5000"
+    },
+    {
+      "DigitalChiplet[0]_deferrals": "0"
+    },
+    {
+      "DigitalChiplet[0]_saturation": "0"
+    },
+    {
+      "DigitalChiplet[0]_macs_total": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_scalar_ops": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_vector_ops": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_special_ops": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_busy_cycles": "4982"
+    },
+    {
+      "DigitalChiplet[0]_pe[0]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_pe[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_pe[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_pe[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_cluster[0]_busy_cycles": "4982"
+    },
+    {
+      "DigitalChiplet[0]_spu_cluster[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_cluster[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_spu_cluster[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[0]_buffer_activation": "32768"
+    },
+    {
+      "DigitalChiplet[0]_buffer_weights": "0"
+    },
+    {
+      "DigitalChiplet[0]_buffer_scratch": "0"
+    },
+    {
+      "DigitalChiplet[1]_executed_tasks": "1"
+    },
+    {
+      "DigitalChiplet[1]_pending_cycles": "2"
+    },
+    {
+      "DigitalChiplet[1]_busy_cycles": "432"
+    },
+    {
+      "DigitalChiplet[1]_deferrals": "0"
+    },
+    {
+      "DigitalChiplet[1]_saturation": "0"
+    },
+    {
+      "DigitalChiplet[1]_macs_total": "2097152"
+    },
+    {
+      "DigitalChiplet[1]_spu_scalar_ops": "2097152"
+    },
+    {
+      "DigitalChiplet[1]_spu_vector_ops": "2097152"
+    },
+    {
+      "DigitalChiplet[1]_spu_special_ops": "0"
+    },
+    {
+      "DigitalChiplet[1]_spu_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_pe[0]_busy_cycles": "394"
+    },
+    {
+      "DigitalChiplet[1]_pe[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_pe[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_pe[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_spu_cluster[0]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_spu_cluster[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_spu_cluster[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_spu_cluster[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[1]_buffer_weights": "0"
+    },
+    {
+      "DigitalChiplet[1]_buffer_scratch": "0"
+    },
+    {
+      "DigitalChiplet[1]_buffer_activation": "0"
+    },
+    {
+      "DigitalChiplet[2]_executed_tasks": "1"
+    },
+    {
+      "DigitalChiplet[2]_pending_cycles": "2"
+    },
+    {
+      "DigitalChiplet[2]_busy_cycles": "225"
+    },
+    {
+      "DigitalChiplet[2]_deferrals": "0"
+    },
+    {
+      "DigitalChiplet[2]_saturation": "0"
+    },
+    {
+      "DigitalChiplet[2]_macs_total": "0"
+    },
+    {
+      "DigitalChiplet[2]_spu_scalar_ops": "128"
+    },
+    {
+      "DigitalChiplet[2]_spu_vector_ops": "128"
+    },
+    {
+      "DigitalChiplet[2]_spu_special_ops": "16"
+    },
+    {
+      "DigitalChiplet[2]_spu_busy_cycles": "225"
+    },
+    {
+      "DigitalChiplet[2]_pe[0]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_pe[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_pe[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_pe[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_spu_cluster[0]_busy_cycles": "225"
+    },
+    {
+      "DigitalChiplet[2]_spu_cluster[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_spu_cluster[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_spu_cluster[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[2]_buffer_activation": "0"
+    },
+    {
+      "DigitalChiplet[2]_buffer_weights": "0"
+    },
+    {
+      "DigitalChiplet[2]_buffer_scratch": "0"
+    },
+    {
+      "DigitalChiplet[3]_executed_tasks": "0"
+    },
+    {
+      "DigitalChiplet[3]_pending_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_deferrals": "0"
+    },
+    {
+      "DigitalChiplet[3]_saturation": "0"
+    },
+    {
+      "DigitalChiplet[3]_macs_total": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_scalar_ops": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_vector_ops": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_special_ops": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_pe[0]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_pe[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_pe[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_pe[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_cluster[0]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_cluster[1]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_cluster[2]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_spu_cluster[3]_busy_cycles": "0"
+    },
+    {
+      "DigitalChiplet[3]_buffer_activation": "0"
+    },
+    {
+      "DigitalChiplet[3]_buffer_weights": "0"
+    },
+    {
+      "DigitalChiplet[3]_buffer_scratch": "0"
+    },
+    {
+      "RramChiplet[0]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[0]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[0]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[0]_deferrals": "0"
+    },
+    {
+      "RramChiplet[0]_saturation": "0"
+    },
+    {
+      "RramChiplet[0]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[0]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[0]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[0]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[0]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[0]_buffer_input": "32768"
+    },
+    {
+      "RramChiplet[0]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[1]_executed_tasks": "1"
+    },
+    {
+      "RramChiplet[1]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[1]_busy_cycles": "13"
+    },
+    {
+      "RramChiplet[1]_deferrals": "0"
+    },
+    {
+      "RramChiplet[1]_saturation": "0"
+    },
+    {
+      "RramChiplet[1]_cim_tasks": "1"
+    },
+    {
+      "RramChiplet[1]_pulse_count": "6"
+    },
+    {
+      "RramChiplet[1]_adc_samples": "12"
+    },
+    {
+      "RramChiplet[1]_preprocess_cycles": "6"
+    },
+    {
+      "RramChiplet[1]_postprocess_cycles": "2"
+    },
+    {
+      "RramChiplet[1]_error_last": "0.000000"
+    },
+    {
+      "RramChiplet[1]_error_max": "0.000000"
+    },
+    {
+      "RramChiplet[1]_error_avg": "0.000000"
+    },
+    {
+      "RramChiplet[1]_result_final": "0.400000"
+    },
+    {
+      "RramChiplet[1]_result_reference": "0.400000"
+    },
+    {
+      "RramChiplet[1]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[1]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[2]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[2]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[2]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[2]_deferrals": "0"
+    },
+    {
+      "RramChiplet[2]_saturation": "0"
+    },
+    {
+      "RramChiplet[2]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[2]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[2]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[2]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[2]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[2]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[2]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[3]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[3]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[3]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[3]_deferrals": "0"
+    },
+    {
+      "RramChiplet[3]_saturation": "0"
+    },
+    {
+      "RramChiplet[3]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[3]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[3]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[3]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[3]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[3]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[3]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[4]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[4]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[4]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[4]_deferrals": "0"
+    },
+    {
+      "RramChiplet[4]_saturation": "0"
+    },
+    {
+      "RramChiplet[4]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[4]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[4]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[4]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[4]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[4]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[4]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[5]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[5]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[5]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[5]_deferrals": "0"
+    },
+    {
+      "RramChiplet[5]_saturation": "0"
+    },
+    {
+      "RramChiplet[5]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[5]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[5]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[5]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[5]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[5]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[5]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[6]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[6]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[6]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[6]_deferrals": "0"
+    },
+    {
+      "RramChiplet[6]_saturation": "0"
+    },
+    {
+      "RramChiplet[6]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[6]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[6]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[6]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[6]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[6]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[6]_buffer_output": "0"
+    },
+    {
+      "RramChiplet[7]_executed_tasks": "0"
+    },
+    {
+      "RramChiplet[7]_pending_cycles": "0"
+    },
+    {
+      "RramChiplet[7]_busy_cycles": "0"
+    },
+    {
+      "RramChiplet[7]_deferrals": "0"
+    },
+    {
+      "RramChiplet[7]_saturation": "0"
+    },
+    {
+      "RramChiplet[7]_cim_tasks": "0"
+    },
+    {
+      "RramChiplet[7]_pulse_count": "0"
+    },
+    {
+      "RramChiplet[7]_adc_samples": "0"
+    },
+    {
+      "RramChiplet[7]_preprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[7]_postprocess_cycles": "0"
+    },
+    {
+      "RramChiplet[7]_buffer_input": "0"
+    },
+    {
+      "RramChiplet[7]_buffer_output": "0"
+    },
+    {
+      "ChipletPlatform_avg_digital_throughput": "0.0006"
+    },
+    {
+      "ChipletPlatform_avg_rram_throughput": "0.0002"
+    },
+    {
+      "ChipletPlatform_avg_transfer_throughput": "0.0004"
+    },
+    {
+      "ChipletPlatform_avg_transfer_bandwidth_bytes_per_cycle": "13.1072"
+    },
+    {
+      "ChipletPlatform_total_digital_deferrals": "0"
+    },
+    {
+      "ChipletPlatform_total_rram_deferrals": "0"
+    },
+    {
+      "ChipletPlatform_total_digital_saturation": "0"
+    },
+    {
+      "ChipletPlatform_total_rram_saturation": "0"
+    },
+    {
+      "ChipletPlatform_digital_macs_total": "2097152"
+    },
+    {
+      "ChipletPlatform_spu_scalar_ops_total": "2097280"
+    },
+    {
+      "ChipletPlatform_spu_vector_ops_total": "2097280"
+    },
+    {
+      "ChipletPlatform_spu_special_ops_total": "16"
+    },
+    {
+      "ChipletPlatform_spu_busy_cycles_total": "5207"
+    },
+    {
+      "ChipletPlatform_rram_pulse_count_total": "6"
+    },
+    {
+      "ChipletPlatform_rram_adc_samples_total": "12"
+    },
+    {
+      "ChipletPlatform_rram_preprocess_cycles_total": "6"
+    },
+    {
+      "ChipletPlatform_rram_postprocess_cycles_total": "2"
+    },
+    {
+      "ChipletPlatform_rram_error_samples": "1"
+    },
+    {
+      "ChipletPlatform_rram_error_last": "0.000000"
+    },
+    {
+      "ChipletPlatform_rram_error_max": "0.000000"
+    },
+    {
+      "ChipletPlatform_rram_error_avg": "0.000000"
+    },
+    {
+      "ChipletPlatform_digital_utilization": "0.2828"
+    },
+    {
+      "ChipletPlatform_rram_utilization": "0.0003"
+    },
+    {
+      "ChipletPlatform_host_dma_load_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_host_dma_store_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_host_tasks_total": "0"
+    },
+    {
+      "ChipletPlatform_stream_batches_issued_total": "0"
+    },
+    {
+      "ChipletPlatform_stream_batches_completed_total": "0"
+    },
+    {
+      "ChipletPlatform_stream_active_peak": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_loads_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_stores_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_hits_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_misses_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_load_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_store_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_hit_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_miss_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_evicted_bytes_total": "0"
+    },
+    {
+      "ChipletPlatform_kv_cache_resident_peak_bytes": "0"
+    },
+    {
+      "ChipletPlatform_host_d2host_tasks_total": "0"
+    },
+    {
+      "ChipletPlatform_host_host2d_tasks_total": "0"
+    }
+  ]
+}

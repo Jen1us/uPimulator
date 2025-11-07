@@ -3,6 +3,7 @@
 root_dir=/home/via/dongjae/upimulator_beta/golang/uPIMulator
 
 eval "mkdir -p ${root_dir}/bin/"
+eval "mkdir -p ${root_dir}/validation_log/"
 
 for num_tasklets in 1 2 4 8 16
 do
@@ -73,3 +74,10 @@ do
 
 
 done
+
+echo "Running chiplet transformer validation"
+eval "${root_dir}/build/uPIMulator --root_dirpath ${root_dir}/ --bin_dirpath ${root_dir}/bin --benchmark TRANSFORMER --platform_mode chiplet --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 --num_tasklets 4 --data_prep_params 256"
+eval "mv ${root_dir}/bin/log.txt ${root_dir}/validation_log/CHIPLET_TRANSFORMER.txt"
+eval "mv ${root_dir}/bin/chiplet_log.txt ${root_dir}/validation_log/CHIPLET_TRANSFORMER_chiplet.txt 2>/dev/null"
+eval "rm ${root_dir}/bin/*"
+echo "Chiplet transformer done"

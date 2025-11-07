@@ -6,6 +6,7 @@ import (
 	"uPIMulator/src/misc"
 	"uPIMulator/src/simulator/dpu/dram"
 	"uPIMulator/src/simulator/dpu/logic"
+	"uPIMulator/src/simulator/dpu/rram"
 	"uPIMulator/src/simulator/dpu/sram"
 )
 
@@ -25,8 +26,9 @@ type Dpu struct {
 	iram              *sram.Iram
 	wram              *sram.Wram
 	mram              *dram.Mram
+	rram_array        *rram.Array
 	operand_collector *logic.OperandCollector
-	memory_controller *dram.MemoryController
+	memory_controller logic.MemoryController
 	dma               *logic.Dma
 	logic             *logic.Logic
 
@@ -79,16 +81,31 @@ func (this *Dpu) Init(
 	this.wram = new(sram.Wram)
 	this.wram.Init()
 
-	this.mram = new(dram.Mram)
-	this.mram.Init(command_line_parser)
-
 	this.operand_collector = new(logic.OperandCollector)
 	this.operand_collector.Init()
 	this.operand_collector.ConnectWram(this.wram)
 
-	this.memory_controller = new(dram.MemoryController)
-	this.memory_controller.Init(channel_id, rank_id, dpu_id, command_line_parser)
-	this.memory_controller.ConnectMram(this.mram)
+	memory_type := command_line_parser.StringParameter("memory_type")
+
+	if memory_type == "rram" {
+		this.rram_array = new(rram.Array)
+		this.rram_array.Init(command_line_parser)
+
+		rram_controller := new(rram.MemoryController)
+		rram_controller.Init(channel_id, rank_id, dpu_id, command_line_parser)
+		rram_controller.ConnectArray(this.rram_array)
+
+		this.memory_controller = rram_controller
+	} else {
+		this.mram = new(dram.Mram)
+		this.mram.Init(command_line_parser)
+
+		dram_controller := new(dram.MemoryController)
+		dram_controller.Init(channel_id, rank_id, dpu_id, command_line_parser)
+		dram_controller.ConnectMram(this.mram)
+
+		this.memory_controller = dram_controller
+	}
 
 	this.dma = new(logic.Dma)
 	this.dma.Init()
@@ -118,10 +135,19 @@ func (this *Dpu) Fini() {
 	this.atomic.Fini()
 	this.iram.Fini()
 	this.wram.Fini()
-	this.mram.Fini()
+	if this.mram != nil {
+		this.mram.Fini()
+	}
+	if this.rram_array != nil {
+		this.rram_array.Fini()
+	}
 
 	this.operand_collector.Fini()
-	this.memory_controller.Fini()
+	if controller, ok := this.memory_controller.(*dram.MemoryController); ok {
+		controller.Fini()
+	} else if controller, ok := this.memory_controller.(*rram.MemoryController); ok {
+		controller.Fini()
+	}
 
 	this.logic.Fini()
 	this.dma.Fini()
@@ -147,7 +173,7 @@ func (this *Dpu) Logic() *logic.Logic {
 	return this.logic
 }
 
-func (this *Dpu) MemoryController() *dram.MemoryController {
+func (this *Dpu) MemoryController() logic.MemoryController {
 	return this.memory_controller
 }
 

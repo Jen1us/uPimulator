@@ -6983,10 +6983,57 @@ func (this *Instruction) SdmaDmaRriOpCodes() map[OpCode]bool {
 	}
 }
 
+func (this *Instruction) RramLoadDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		RRAM_LOAD_COL: true,
+	}
+}
+
+func (this *Instruction) RramCimDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		RRAM_CIM_MAC: true,
+	}
+}
+
+func (this *Instruction) PeChipletDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		PE_CMD_GEMM:           true,
+		PE_CMD_ATTENTION_HEAD: true,
+		PE_CMD_ELEMENTWISE:    true,
+		PE_CMD_TOKEN_PREP:     true,
+	}
+}
+
+func (this *Instruction) RramChipletDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		RRAM_CMD_STAGE_ACT: true,
+		RRAM_CMD_EXECUTE:   true,
+		RRAM_CMD_POST:      true,
+	}
+}
+
+func (this *Instruction) TransferChipletDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		XFER_CMD_SCHEDULE: true,
+	}
+}
+
+func (this *Instruction) SyncChipletDmaRriOpCodes() map[OpCode]bool {
+	return map[OpCode]bool{
+		CHIPLET_CMD_SYNC: true,
+	}
+}
+
 func (this *Instruction) DmaRriOpCodes() map[OpCode]bool {
 	ldma_dma_rri_op_codes := this.LdmaDmaRriOpCodes()
 	ldmai_dma_rri_op_codes := this.LdmaiDmaRriOpCodes()
 	sdma_dma_rri_op_codes := this.SdmaDmaRriOpCodes()
+	rram_load_dma_rri_op_codes := this.RramLoadDmaRriOpCodes()
+	rram_cim_dma_rri_op_codes := this.RramCimDmaRriOpCodes()
+	pe_chiplet_dma_rri_op_codes := this.PeChipletDmaRriOpCodes()
+	rram_chiplet_dma_rri_op_codes := this.RramChipletDmaRriOpCodes()
+	transfer_chiplet_dma_rri_op_codes := this.TransferChipletDmaRriOpCodes()
+	sync_chiplet_dma_rri_op_codes := this.SyncChipletDmaRriOpCodes()
 
 	dma_rri_op_codes := make(map[OpCode]bool, 0)
 
@@ -6999,6 +7046,30 @@ func (this *Instruction) DmaRriOpCodes() map[OpCode]bool {
 	}
 
 	for k, v := range sdma_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range rram_load_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range rram_cim_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range pe_chiplet_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range rram_chiplet_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range transfer_chiplet_dma_rri_op_codes {
+		dma_rri_op_codes[k] = v
+	}
+
+	for k, v := range sync_chiplet_dma_rri_op_codes {
 		dma_rri_op_codes[k] = v
 	}
 
@@ -7543,6 +7614,28 @@ func (this *Instruction) StringifyOpCode() string {
 		return "ldmai"
 	} else if this.op_code == SDMA {
 		return "sdma"
+	} else if this.op_code == RRAM_LOAD_COL {
+		return "rram_load_col"
+	} else if this.op_code == RRAM_CIM_MAC {
+		return "rram_cim_mac"
+	} else if this.op_code == PE_CMD_GEMM {
+		return "pe_cmd_gemm"
+	} else if this.op_code == PE_CMD_ATTENTION_HEAD {
+		return "pe_cmd_attention_head"
+	} else if this.op_code == PE_CMD_ELEMENTWISE {
+		return "pe_cmd_elementwise"
+	} else if this.op_code == PE_CMD_TOKEN_PREP {
+		return "pe_cmd_token_prep"
+	} else if this.op_code == RRAM_CMD_STAGE_ACT {
+		return "rram_cmd_stage_act"
+	} else if this.op_code == RRAM_CMD_EXECUTE {
+		return "rram_cmd_execute"
+	} else if this.op_code == RRAM_CMD_POST {
+		return "rram_cmd_post"
+	} else if this.op_code == XFER_CMD_SCHEDULE {
+		return "xfer_cmd_schedule"
+	} else if this.op_code == CHIPLET_CMD_SYNC {
+		return "chiplet_cmd_sync"
 	} else {
 		err := errors.New("op code is not valid")
 		panic(err)

@@ -59,7 +59,34 @@ Detailed simulation results will be written to the standard output (`stdout`).
 cd /path/to/uPIMulator/golang/uPIMulator
 rm -rf bin
 mkdir bin
-./build/uPIMulator --root_dirpath /path/to/uPIMulator/golang/uPIMulator --bin_dirpath /path/to/uPIMulator/golang/uPIMulator/bin --benchmark VA --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 --num_tasklets 16 --data_prep_params 1024
+./build/uPIMulator --root_dirpath /Users/Jenius/Projects/CIMDi/2025.09/Evaluation/uPIMulator/golang/uPIMulator --bin_dirpath /Users/Jenius/Projects/CIMDi/2025.09/Evaluation/uPIMulator/golang/uPIMulator/bin --benchmark VA --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 --num_tasklets 16 --data_prep_params 1024
+```
+
+## Chiplet Mode Quick Start
+
+uPIMulator 现在支持 Chiplet 平台建模（数字 + RRAM CIM）。要运行 Chiplet 流水线：
+
+1. 在 `assembler` 中使用 `TRANSFORMER` benchmark，它会生成 `chiplet_commands.json`；
+2. 通过 `--platform_mode chiplet` 启动平台；
+3. （可选）使用 `tools/chiplet_profiler.py` 对 `chiplet_log.txt` 做后处理。
+
+示例：
+
+```bash
+cd /path/to/uPIMulator/golang/uPIMulator
+./build/uPIMulator \
+  --platform_mode chiplet \
+  --benchmark TRANSFORMER \
+  --root_dirpath /path/to/uPIMulator/golang/uPIMulator \
+  --bin_dirpath /path/to/uPIMulator/golang/uPIMulator/bin \
+  --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 \
+  --num_tasklets 4
+```
+
+运行完成后，`bin/chiplet_log.txt` 会记录关键指标。使用以下脚本可快速汇总：
+
+```bash
+python tools/chiplet_profiler.py bin/chiplet_log.txt --json
 ```
 
 # 📄 Reproducing Figures from the Paper

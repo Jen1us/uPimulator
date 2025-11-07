@@ -1752,6 +1752,28 @@ func (this *InstructionAssigner) ConvertDmaRriOpCode(op_code *expr.Expr) instruc
 		return instruction.LDMAI
 	} else if token_type == lexer.SDMA {
 		return instruction.SDMA
+	} else if token_type == lexer.RRAM_LOAD_COL {
+		return instruction.RRAM_LOAD_COL
+	} else if token_type == lexer.RRAM_CIM_MAC {
+		return instruction.RRAM_CIM_MAC
+	} else if token_type == lexer.PE_CMD_GEMM {
+		return instruction.PE_CMD_GEMM
+	} else if token_type == lexer.PE_CMD_ATTENTION_HEAD {
+		return instruction.PE_CMD_ATTENTION_HEAD
+	} else if token_type == lexer.PE_CMD_ELEMENTWISE {
+		return instruction.PE_CMD_ELEMENTWISE
+	} else if token_type == lexer.PE_CMD_TOKEN_PREP {
+		return instruction.PE_CMD_TOKEN_PREP
+	} else if token_type == lexer.RRAM_CMD_STAGE_ACT {
+		return instruction.RRAM_CMD_STAGE_ACT
+	} else if token_type == lexer.RRAM_CMD_EXECUTE {
+		return instruction.RRAM_CMD_EXECUTE
+	} else if token_type == lexer.RRAM_CMD_POST {
+		return instruction.RRAM_CMD_POST
+	} else if token_type == lexer.XFER_CMD_SCHEDULE {
+		return instruction.XFER_CMD_SCHEDULE
+	} else if token_type == lexer.CHIPLET_CMD_SYNC {
+		return instruction.CHIPLET_CMD_SYNC
 	} else {
 		err := errors.New("DMA_RRI op code is not valid")
 		panic(err)

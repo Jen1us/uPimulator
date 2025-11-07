@@ -1,0 +1,31 @@
+{
+  "name": "transformer_moe_block",
+  "sequence": [
+    { "type": "token_prep", "tokens": 128, "features": 256, "latency": 8 },
+    { "type": "attention", "rows": 256, "cols": 256, "k": 128, "latency": 64, "deps": [0] },
+    { "type": "softmax", "rows": 128, "cols": 128, "latency": 24, "deps": [1] },
+    { "type": "moe_gating", "rows": 96, "cols": 64, "latency": 20, "deps": [2] },
+    { "type": "transfer", "bytes": 65536, "latency": 14, "direction": "digital_to_rram", "deps": [3] },
+    {
+      "type": "moe_linear",
+      "parallel": true,
+      "pulse_count": 32,
+      "adc_samples": 96,
+      "pre_cycles": 12,
+      "post_cycles": 8,
+      "activation_bytes": 49152,
+      "weight_bytes": 98304,
+      "stage_latency": 20,
+      "execute_latency": 60,
+      "post_latency": 15,
+      "experts": [
+        { "chiplet": 0 },
+        { "chiplet": 1, "activation_bytes": 45056, "weight_bytes": 90112, "execute_latency": 64 }
+      ],
+      "deps": [4]
+    },
+    { "type": "transfer", "bytes": 49152, "latency": 12, "direction": "rram_to_digital", "deps": [5] },
+    { "type": "moe_merge", "rows": 96, "cols": 32, "latency": 22, "deps": [6] },
+    { "type": "postprocess", "rows": 128, "cols": 128, "latency": 18, "deps": [7] }
+  ]
+}

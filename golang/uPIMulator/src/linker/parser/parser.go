@@ -460,7 +460,13 @@ func (this *Parser) RegisterDmaRriOpCodeExpr() {
 			if stack_items[0].StackItemType() == TOKEN {
 				token_type := stack_items[0].Token().TokenType()
 
-				if token_type == lexer.LDMA || token_type == lexer.LDMAI || token_type == lexer.SDMA {
+				if token_type == lexer.LDMA || token_type == lexer.LDMAI || token_type == lexer.SDMA ||
+					token_type == lexer.RRAM_LOAD_COL || token_type == lexer.RRAM_CIM_MAC ||
+					token_type == lexer.PE_CMD_GEMM || token_type == lexer.PE_CMD_ATTENTION_HEAD ||
+					token_type == lexer.PE_CMD_ELEMENTWISE || token_type == lexer.PE_CMD_TOKEN_PREP ||
+					token_type == lexer.RRAM_CMD_STAGE_ACT || token_type == lexer.RRAM_CMD_EXECUTE ||
+					token_type == lexer.RRAM_CMD_POST || token_type == lexer.XFER_CMD_SCHEDULE ||
+					token_type == lexer.CHIPLET_CMD_SYNC {
 					return true
 				} else {
 					return false
@@ -556,7 +562,6 @@ func (this *Parser) RegisterConditionExpr() {
 					token_type == lexer.SMI ||
 					token_type == lexer.SO ||
 					token_type == lexer.SE ||
-					token_type == lexer.NC5 ||
 					token_type == lexer.NC5 ||
 					token_type == lexer.NC6 ||
 					token_type == lexer.NC7 ||

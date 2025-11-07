@@ -1,9 +1,0 @@
-Time Series Analysis (TS)
-
-Compilation instructions:
-
-    make
-
-Execution instructions
-
-    ./launch.sh

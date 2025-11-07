@@ -106,6 +106,14 @@ func (this *MemoryController) StatFactory() *misc.StatFactory {
 	return this.stat_factory
 }
 
+func (this *MemoryController) MemorySchedulerStatFactory() *misc.StatFactory {
+	return this.memory_scheduler.StatFactory()
+}
+
+func (this *MemoryController) RowBufferStatFactory() *misc.StatFactory {
+	return this.row_buffer.StatFactory()
+}
+
 func (this *MemoryController) IsEmpty() bool {
 	return this.memory_scheduler.IsEmpty() &&
 		this.row_buffer.IsEmpty() &&
@@ -293,4 +301,14 @@ func (this *MemoryController) Min(x int64, y int64) int64 {
 	} else {
 		return y
 	}
+}
+
+func (this *MemoryController) StageActivations(_ []float32) {
+	err := errors.New("StageActivations is not supported for MRAM controller")
+	panic(err)
+}
+
+func (this *MemoryController) ExecuteCim(_ int) float32 {
+	err := errors.New("ExecuteCim is not supported for MRAM controller")
+	panic(err)
 }

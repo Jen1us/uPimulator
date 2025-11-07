@@ -11,7 +11,8 @@ import (
 type Assembler struct {
 	bin_dirpath string
 
-	benchmark string
+	benchmark        string
+	chipletModelPath string
 
 	num_channels          int
 	num_ranks_per_channel int
@@ -27,6 +28,7 @@ func (this *Assembler) Init(command_line_parser *misc.CommandLineParser) {
 	this.bin_dirpath = command_line_parser.StringParameter("bin_dirpath")
 
 	this.benchmark = command_line_parser.StringParameter("benchmark")
+	this.chipletModelPath = command_line_parser.StringParameter("chiplet_model_path")
 
 	this.num_channels = int(command_line_parser.IntParameter("num_channels"))
 	this.num_ranks_per_channel = int(command_line_parser.IntParameter("num_ranks_per_channel"))
@@ -50,6 +52,7 @@ func (this *Assembler) Init(command_line_parser *misc.CommandLineParser) {
 	this.assemblables["TS"] = new(prim.Ts)
 	this.assemblables["UNI"] = new(prim.Uni)
 	this.assemblables["VA"] = new(prim.Va)
+	this.assemblables["TRANSFORMER"] = new(prim.Transformer)
 
 	if assemblable, found := this.assemblables[this.benchmark]; found {
 		assemblable.Init(command_line_parser)
@@ -65,6 +68,7 @@ func (this *Assembler) Assemble() {
 	this.AssembleInputDpuMramHeapPointerName()
 	this.AssembleOutputDpuMramHeapPointerName()
 	this.AssembleNumExecutions()
+	this.AssembleChipletCommands()
 }
 
 func (this *Assembler) AssembleInputDpuHost() {
