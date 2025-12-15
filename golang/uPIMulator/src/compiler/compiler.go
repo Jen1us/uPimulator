@@ -38,7 +38,10 @@ func (this *Compiler) Init(command_line_parser *misc.CommandLineParser) {
 
 	if _, err := exec.LookPath("docker"); err == nil {
 		this.dockerAvailable = true
-		this.Build()
+		// Chiplet 模式不依赖 Docker 编译链路；避免在缺少 SDK 资源时直接失败。
+		if misc.RuntimePlatformMode() != misc.PlatformModeChiplet {
+			this.Build()
+		}
 	} else {
 		fmt.Println("warning: docker not found in PATH; skipping containerized build steps")
 		this.dockerAvailable = false
@@ -63,9 +66,10 @@ func (this *Compiler) Build() {
 		docker_dirpath,
 	)
 
-	err := command.Run()
-
+	output, err := command.CombinedOutput()
 	if err != nil {
+		fmt.Println("docker build command failed")
+		fmt.Printf("docker build output: %q\n", string(output))
 		panic(err)
 	}
 }

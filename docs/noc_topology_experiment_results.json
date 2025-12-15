@@ -5,20 +5,46 @@
   "booksim_binary": "golang/booksim2/src/booksim_service",
   "results": [
     {
+      "topology": "fly_k8_n2",
+      "label": "Fly k=8,n=2",
+      "booksim_config": "tools/booksim_configs/fly_k8_n2.conf",
+      "cycles": 4208
+    },
+    {
+      "topology": "fattree_k4_n3",
+      "label": "FatTree k=4,n=3",
+      "booksim_config": "tools/booksim_configs/fattree_k4_n3.conf",
+      "cycles": 4242
+    },
+    {
+      "topology": "tree4_k4_n3",
+      "label": "Tree4 k=4,n=3",
+      "booksim_config": "tools/booksim_configs/tree4_k4_n3.conf",
+      "cycles": 4242
+    },
+    {
       "topology": "mesh_8x8",
+      "label": "Mesh 8x8",
       "booksim_config": "tools/booksim_configs/mesh_8x8.conf",
       "cycles": 4316
     },
     {
       "topology": "cmesh_4x4_c4",
+      "label": "CMesh 4x4,c=4",
       "booksim_config": "tools/booksim_configs/cmesh_4x4_c4.conf",
       "cycles": 4766
     },
     {
+      "topology": "torus_8x8",
+      "label": "Torus 8x8",
+      "booksim_config": "tools/booksim_configs/torus_8x8.conf",
+      "cycles": 4843
+    },
+    {
       "topology": "flatfly_k4_n2",
+      "label": "FlatFly k=4,n=2",
       "booksim_config": "tools/booksim_configs/flatfly_k4_n2.conf",
       "cycles": 6768
     }
   ]
 }
-

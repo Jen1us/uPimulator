@@ -1,6 +1,9 @@
 *.S
 *.bin
 
+# macOS
+.DS_Store
+
 bin/
 build/
 cmake-build-debug/
@@ -42,3 +45,7 @@ __pycache__/
 golang/uPIMulator/docker/upmem-2023.2.0-Linux-x86_64.tar.gz
 python_cpp/uPIMulator_frontend/benchmark/TS/baselines/cpu/inputs/randomlist33M.txt
 python_cpp/uPIMulator_frontend/benchmark/TS/baselines/gpu/inputs/randomlist33M.txt
+
+# Local checkouts of external simulators (kept as separate repos)
+golang/booksim2/
+golang/ramulator2/
