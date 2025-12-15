@@ -1,0 +1,24 @@
+{
+  "metric": "ChipletPlatform_cycles",
+  "platform_mode": "chiplet",
+  "workload": "builtin Attention + MoE + SwiGLU (benchmark=BS, 20 commands)",
+  "booksim_binary": "golang/booksim2/src/booksim_service",
+  "results": [
+    {
+      "topology": "mesh_8x8",
+      "booksim_config": "tools/booksim_configs/mesh_8x8.conf",
+      "cycles": 4316
+    },
+    {
+      "topology": "cmesh_4x4_c4",
+      "booksim_config": "tools/booksim_configs/cmesh_4x4_c4.conf",
+      "cycles": 4766
+    },
+    {
+      "topology": "flatfly_k4_n2",
+      "booksim_config": "tools/booksim_configs/flatfly_k4_n2.conf",
+      "cycles": 6768
+    }
+  ]
+}
+

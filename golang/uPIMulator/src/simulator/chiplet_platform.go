@@ -1795,6 +1795,10 @@ func (this *ChipletPlatform) handleTransferTask(task *chiplet.Task) {
 				chip.AddInputTransferEnergy(energyBytes)
 			}
 		}
+		estimated := this.estimateNocCycles(stageLower, bytes, hopCount, srcDigitalIndex, dstRramIndex, srcRramIndex, dstDigitalIndex, meta)
+		if estimated > 0 {
+			this.transferThrottleUntil += estimated
+		}
 	case "transfer_to_digital":
 		if dstDigitalIndex >= 0 && dstDigitalIndex < len(this.digitalChiplets) {
 			if chip := this.digitalChiplets[dstDigitalIndex]; chip != nil {
@@ -1805,6 +1809,10 @@ func (this *ChipletPlatform) handleTransferTask(task *chiplet.Task) {
 			if chip := this.rramChiplets[srcRramIndex]; chip != nil {
 				chip.AddOutputTransferEnergy(energyBytes)
 			}
+		}
+		estimated := this.estimateNocCycles(stageLower, bytes, hopCount, srcDigitalIndex, dstRramIndex, srcRramIndex, dstDigitalIndex, meta)
+		if estimated > 0 {
+			this.transferThrottleUntil += estimated
 		}
 	case "transfer_host2d":
 		if dstDigitalIndex >= 0 && dstDigitalIndex < len(this.digitalChiplets) {
@@ -1902,6 +1910,70 @@ func (this *ChipletPlatform) handleTransferTask(task *chiplet.Task) {
 			this.statFactory.Increment("transfer_d2host_hops_total", int64(hopCount))
 		}
 	}
+}
+
+func (this *ChipletPlatform) estimateNocCycles(stage string, bytes int64, hops int, srcDigital int, dstRram int, srcRram int, dstDigital int, meta map[string]interface{}) int {
+	if bytes <= 0 {
+		return 0
+	}
+
+	stageLower := strings.ToLower(stage)
+	bandwidth := int64(0)
+	if this.config != nil {
+		switch stageLower {
+		case "transfer_to_rram":
+			bandwidth = this.config.TransferBandwidthDr
+		case "transfer_to_digital":
+			bandwidth = this.config.TransferBandwidthRd
+		}
+	}
+
+	fallback := estimateTransferCycles(bytes, bandwidth, hops)
+
+	client := this.booksimClient
+	if client == nil || !client.Enabled() {
+		return fallback
+	}
+
+	totalDigital := len(this.digitalChiplets)
+	totalRram := len(this.rramChiplets)
+
+	switch stageLower {
+	case "transfer_to_rram":
+		srcNode := this.nocDigitalNodeID(srcDigital, totalDigital)
+		dstNode := this.nocRramNodeID(dstRram, totalDigital, totalRram)
+		if srcNode < 0 || dstNode < 0 {
+			return fallback
+		}
+		if cycles, ok := client.Estimate(srcNode, dstNode, bytes, meta); ok && cycles > 0 {
+			return cycles
+		}
+	case "transfer_to_digital":
+		srcNode := this.nocRramNodeID(srcRram, totalDigital, totalRram)
+		dstNode := this.nocDigitalNodeID(dstDigital, totalDigital)
+		if srcNode < 0 || dstNode < 0 {
+			return fallback
+		}
+		if cycles, ok := client.Estimate(srcNode, dstNode, bytes, meta); ok && cycles > 0 {
+			return cycles
+		}
+	}
+
+	return fallback
+}
+
+func estimateTransferCycles(bytes int64, bandwidth int64, hops int) int {
+	if bandwidth <= 0 {
+		bandwidth = 4096
+	}
+	cycles := int((bytes + bandwidth - 1) / bandwidth)
+	if cycles <= 0 {
+		cycles = 1
+	}
+	if hops > 0 {
+		cycles += hops
+	}
+	return cycles
 }
 
 func (this *ChipletPlatform) handleKvAccess(stage string, bytes int64, meta map[string]interface{}) {
