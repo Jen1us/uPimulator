@@ -148,17 +148,19 @@
 
 RRAM 侧模型面向“阵列计算 + 模数混合外设 + 数字后处理”的链路，主要单元与细节如下：
 
-- **Tile / SenseArray**：以阵列几何（rows/cols）与器件精度（cell bits、DAC/ADC bits）为核心参数，刻画 CIM 计算能力与外设开销；
-- **Controller（资源预留/调度）**：对 CIM 任务进行占用与排队建模，输出执行周期并驱动统计累积；
-- **Preprocess / Postprocess**：分别对应激活预处理与输出后处理，提供可拆分的周期与能耗项；
-- **WeightDirectory（权重驻留）**：以 tag 记录权重驻留与命中，统计 weight load / hit / peak bytes，支撑复用收益评估；
-- **CIM 特征统计**：脉冲数、ADC 采样数、预/后处理周期等作为能耗估计的关键驱动量。
+- **阵列单元（Tile / SenseArray）**：以阵列几何（rows/cols）与器件精度（cell bits、DAC/ADC bits）为核心参数，刻画 CIM 计算吞吐与外设开销。  
+- **控制单元（Controller Unit）**：对 CIM 任务的资源预留、并发占用与排队进行建模，输出执行周期并驱动统计累积。  
+- **前处理/后处理（Preprocess / Postprocess）**：分别对应激活预处理与输出后处理，提供可拆分的周期与能耗项以支持链路归因。  
+- **权重目录（Weight Directory）**：以 tag 记录权重驻留与命中，统计 weight load/hit 与峰值驻留字节，用于评估复用收益与带宽压力。  
+- **CIM 统计项（CIM Stats）**：记录脉冲数、ADC 采样数、预/后处理周期等关键驱动量，作为能耗与 PPA 估计的输入。
 
 #### 2.2.3 互联与 Host 存储
 
-- **互联（Interconnect）**：以“互联占用窗口”表达传输的串并行关系；在启用 BookSim2 时，窗口由外部 NoC 延迟估算驱动，从而具备拓扑敏感性；
-- **Host DMA/DRAM（可选）**：Host 侧以 DMA 控制器建模带宽占用；在启用 Ramulator2 时，DMA 周期由 DRAM 服务模型替代带宽近似，从而引入排队与访问类型差异；
-- **KV Cache（可选）**：用于刻画注意力类工作负载的缓存命中与带宽影响，输出 hit/miss 与字节统计，便于开展系统级瓶颈归因。
+- **片上互联（Interconnect / NoC）**：以“互联占用窗口”表达传输的串并行关系，把数据搬移的 bytes 与端点映射为互联占用与延迟。  
+- **NoC 时序服务（BookSim2）**：对每次互联请求查询外部 NoC 仿真器，返回与拓扑/路由/VC 等相关的延迟周期以实现拓扑敏感评估。  
+- **Host DMA 引擎（DMA Engine）**：Host 侧以 DMA 控制器建模带宽占用与传输排队，将 Host↔Chiplet 的数据搬移纳入关键路径。  
+- **Host DRAM 时序服务（Ramulator2，可选）**：在启用时以 DRAM 服务模型替代带宽近似，引入排队、bank 冲突与访问类型差异。  
+- **KV 缓存（KV Cache，可选）**：用于刻画注意力类工作负载的缓存命中与带宽影响，输出 hit/miss 与字节统计以便开展系统级瓶颈归因。
 
 ## 第三章 探索片上网络拓扑结构
 
