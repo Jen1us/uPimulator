@@ -138,12 +138,11 @@
 
 数字侧模型以“吞吐 + 占用 + 并行性”为核心，主要单元与细节如下：
 
-- **Compute Cluster**：数字 Chiplet 的基本调度单元，内部维护等待队列与轮转策略，刻画不同执行单元间的并行与竞争关系；
-- **PE Array（矩阵阵列）**：用于 tile/GEMM 类计算；支持并发度与阵列波次（wave）概念，输出 MAC 计数与忙碌周期；
-- **SPU Cluster（标量/轻量向量）**：用于 gating、归约、elementwise 等非 GEMM 阶段，统计 scalar/vector/special ops；
-- **VPU Unit（向量执行）**：用于向量化阶段与 VPU 型操作，按 issue width / lane / latency 建模；
-- **片上 Buffer（activation/weights/scratch）**：容量与带宽参数化，记录峰值占用，用于评估片上存储压力与潜在瓶颈；
-- **能耗与统计**：按周期累计动态能耗与静态能耗估计，并输出可用于拆分分析的指标（PE/SPU/VPU 等）。
+- **控制单元（Controller Unit）**：数字 Chiplet 的基本调度单元。  
+- **矩阵计算阵列（PE Array）**：脉动阵列，用于高精度动态 GEMM 类计算。  
+- **标量单元（SPU Unit）**：用于门控（gating）、规约（reduce）、逐元素（elementwise）等非 GEMM 阶段计算。  
+- **向量单元（VPU Unit）**：用于向量计算。  
+- **片上缓冲区（Buffer）**：容量与带宽参数化，记录峰值占用，用于评估片上存储压力与潜在瓶颈。
 
 #### 2.2.2 RRAM CIM Chiplet
 
