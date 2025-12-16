@@ -57,32 +57,34 @@
 \begin{tikzpicture}[
   font=\small,
   >=Latex,
-  box/.style={draw,rounded corners,align=center,inner sep=5pt},
+  main/.style={draw,rounded corners,align=center,inner sep=6pt,text width=8.2cm},
+  svc/.style={draw,rounded corners,align=center,inner sep=6pt,text width=6.4cm},
   group/.style={draw,rounded corners,inner sep=8pt},
-  arrow/.style={-Latex,thick}
+  arrow/.style={-Latex,thick},
+  lbl/.style={font=\scriptsize,fill=white,inner sep=1pt}
 ]
-  \node[box] (workload) {Workload Specification\\(Operator Macros / Stage Sequence)};
-  \node[box, right=16mm of workload] (assembler) {Assembler\\(Emit Command Sequence)};
+  \node[main] (workload) {Workload Specification\\(Operator Macros / Stage Sequence)};
+  \node[main, below=12mm of workload] (assembler) {Assembler\\(Emit Command Sequence)};
 
-  \node[box, right=16mm of assembler] (engine) {uPIMulator (Go)\\Execution-Driven Cycle-Level Engine\\
+  \node[main, below=12mm of assembler] (engine) {uPIMulator (Go)\\Execution-Driven Cycle-Level Engine\\
   Host Orchestration / Scheduling\\Digital / RRAM / Interconnect Modeling\\Stats + PPA Estimation};
 
-  \node[box, above=12mm of engine, xshift=20mm] (booksim) {BookSim2\\NoC Timing Service\\(Topology / Routing / VC)};
-  \node[box, below=12mm of engine, xshift=20mm] (ramulator) {Ramulator2\\Host DRAM Timing Service\\(Optional)};
+  \node[svc, right=38mm of engine, yshift=26mm] (booksim) {BookSim2\\NoC Timing Service\\(Topology / Routing / VC)};
+  \node[svc, right=38mm of engine, yshift=-26mm] (ramulator) {Ramulator2\\Host DRAM Timing Service\\(Optional)};
 
-  \node[box, right=18mm of engine] (outputs) {Outputs \& Evaluation\\chiplet\_log.txt\\Stats / Cycles / PPA\\Post-processing \& Plots};
+  \node[main, below=12mm of engine] (outputs) {Outputs \& Evaluation\\chiplet\_log.txt\\Stats / Cycles / PPA\\Post-processing \& Plots};
 
-  \node[group, fit=(assembler) (engine), label={[font=\small]above:uPIMulator Workflow}] {};
+  \node[group, fit=(assembler) (engine), label={[font=\small]left:uPIMulator Workflow}] {};
 
-  \draw[arrow] (workload) -- node[above]{Specs / Params} (assembler);
-  \draw[arrow] (assembler) -- node[above]{chiplet\_commands.json} (engine);
-  \draw[arrow] (engine) -- node[above]{Stats / Logs} (outputs);
+  \draw[arrow] (workload) -- node[lbl, right, xshift=2mm]{Specs / Params} (assembler);
+  \draw[arrow] (assembler) -- node[lbl, right, xshift=2mm]{chiplet\_commands.json} (engine);
+  \draw[arrow] (engine) -- node[lbl, right, xshift=2mm]{Stats / Logs} (outputs);
 
-  \draw[arrow] (engine.north east) -- node[above]{(src,dst,bytes)\\NoC Latency Query} (booksim.west);
-  \draw[arrow] (booksim.west) -- node[below]{cycles} (engine.north east);
+  \draw[arrow, bend left=18] (engine.north east) to node[lbl, pos=0.55, above, sloped]{(src,dst,bytes)\\NoC Latency Query} (booksim.west);
+  \draw[arrow, bend left=18] (booksim.west) to node[lbl, pos=0.45, below, sloped]{cycles} (engine.north east);
 
-  \draw[arrow] (engine.south east) -- node[below]{bytes / access\\DMA Latency Query} (ramulator.west);
-  \draw[arrow] (ramulator.west) -- node[above]{cycles} (engine.south east);
+  \draw[arrow, bend left=18] (engine.south east) to node[lbl, pos=0.55, above, sloped]{bytes / access\\DMA Latency Query} (ramulator.west);
+  \draw[arrow, bend left=18] (ramulator.west) to node[lbl, pos=0.45, below, sloped]{cycles} (engine.south east);
 \end{tikzpicture}
 ```
 
