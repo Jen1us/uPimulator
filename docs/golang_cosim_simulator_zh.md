@@ -61,27 +61,27 @@
   group/.style={draw,rounded corners,inner sep=8pt},
   arrow/.style={-Latex,thick}
 ]
-  \node[box] (workload) {工作负载描述\\（算子宏 / Stage 序列）};
-  \node[box, right=16mm of workload] (assembler) {装配器\\Assembler\\（生成命令序列）};
+  \node[box] (workload) {Workload Specification\\(Operator Macros / Stage Sequence)};
+  \node[box, right=16mm of workload] (assembler) {Assembler\\(Emit Command Sequence)};
 
-  \node[box, right=16mm of assembler] (engine) {uPIMulator（Go）\\执行驱动周期级引擎\\
-  Host 编排/调度\\Digital/RRAM/互联建模\\统计与能耗面积估计};
+  \node[box, right=16mm of assembler] (engine) {uPIMulator (Go)\\Execution-Driven Cycle-Level Engine\\
+  Host Orchestration / Scheduling\\Digital / RRAM / Interconnect Modeling\\Stats + PPA Estimation};
 
-  \node[box, above=12mm of engine, xshift=20mm] (booksim) {BookSim2\\NoC 时序服务\\（topology/routing/VC）};
-  \node[box, below=12mm of engine, xshift=20mm] (ramulator) {Ramulator2\\Host DRAM 时序服务\\（可选）};
+  \node[box, above=12mm of engine, xshift=20mm] (booksim) {BookSim2\\NoC Timing Service\\(Topology / Routing / VC)};
+  \node[box, below=12mm of engine, xshift=20mm] (ramulator) {Ramulator2\\Host DRAM Timing Service\\(Optional)};
 
-  \node[box, right=18mm of engine] (outputs) {输出与评估\\chiplet\_log.txt\\统计/周期/PPA\\后处理与绘图};
+  \node[box, right=18mm of engine] (outputs) {Outputs \& Evaluation\\chiplet\_log.txt\\Stats / Cycles / PPA\\Post-processing \& Plots};
 
-  \node[group, fit=(assembler) (engine), label={[font=\small]above:uPIMulator 工作流}] {};
+  \node[group, fit=(assembler) (engine), label={[font=\small]above:uPIMulator Workflow}] {};
 
-  \draw[arrow] (workload) -- node[above]{参数/规格} (assembler);
+  \draw[arrow] (workload) -- node[above]{Specs / Params} (assembler);
   \draw[arrow] (assembler) -- node[above]{chiplet\_commands.json} (engine);
-  \draw[arrow] (engine) -- node[above]{统计/日志} (outputs);
+  \draw[arrow] (engine) -- node[above]{Stats / Logs} (outputs);
 
-  \draw[arrow] (engine.north east) -- node[above]{(src,dst,bytes)\\NoC 延迟请求} (booksim.west);
+  \draw[arrow] (engine.north east) -- node[above]{(src,dst,bytes)\\NoC Latency Query} (booksim.west);
   \draw[arrow] (booksim.west) -- node[below]{cycles} (engine.north east);
 
-  \draw[arrow] (engine.south east) -- node[below]{bytes/access\\DMA 延迟请求} (ramulator.west);
+  \draw[arrow] (engine.south east) -- node[below]{bytes / access\\DMA Latency Query} (ramulator.west);
   \draw[arrow] (ramulator.west) -- node[above]{cycles} (engine.south east);
 \end{tikzpicture}
 ```
@@ -191,4 +191,3 @@ RRAM 侧模型面向“阵列计算 + 模数混合外设 + 数字后处理”的
 （4）**FlatFly 在当前配置下最差，提示拓扑调参与端点映射的重要性**。Flattened butterfly 的表现对路由/缓冲/端点映射更敏感；在未针对性调参的情况下，端口竞争与路由特性可能导致显著劣化。  
 
 综上，本章以 7 种 NoC 拓扑对比验证了平台的“拓扑—时序—端到端”闭环能力：BookSim2 的拓扑差异能够稳定体现在 `ChipletPlatform_cycles` 上，为后续更大规模的设计空间探索（拓扑 + 带宽 + VC/缓冲 + 端点映射）提供了可复现的评估基础。
-
