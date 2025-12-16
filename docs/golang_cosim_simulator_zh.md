@@ -96,22 +96,35 @@
 
 #### 2.1.1 算子宏（Operator Macros）
 
-平台内置的算子宏覆盖以下典型模块（摘要）：
+平台内置的算子宏面向“快速拼装端到端流水”，每个宏可视为一段可复用的命令片段（每项一句话）：
 
-| 算子宏 | 含义（报告级描述） | 典型阶段（示意） | 涉及域 |
-|---|---|---|---|
-| AttentionBlock | 最小注意力子流水，用于刻画“数字预处理 + CIM 线性 + 回传后处理”的端到端路径 | token\_prep → D→R → RRAM(stage/exec/post) → R→D → elementwise | Digital/RRAM/NoC |
-| MoEGatingBlock | MoE gating + expert 计算的简化版本，用于刻画“gating/归约 + expert 传输 + CIM + merge”的关键交互 | gating(spu) → top-k(reduce) → host fetch → D→R → RRAM(...) → R→D → merge | Host/Digital/RRAM/NoC |
-| SwiGluBlock | SwiGLU 激活的简化版本，用于刻画逐元素与非线性阶段的占用 | elementwise/activation（两段） | Digital |
-| TransformerBlock / Pipeline | Attention 与 FFN（SwiGLU）串联的层级构件，用于快速拉长流水 | Attention + SwiGLU（可多层） | 跨域协同 |
+- `AttentionBlock`：刻画从数字侧预处理、到 RRAM 侧线性（含权重加载与 CIM 执行）、再回传数字侧后处理的最小注意力子流水。  
+- `MoEGatingBlock`：刻画 MoE 的 gating/Top‑K 选择与 Host 协同，再到 expert 侧 CIM 计算与 merge 的端到端关键交互链路。  
+- `SwiGluBlock`：用两段逐元素/非线性阶段近似 SwiGLU 激活，以反映数字侧 elementwise/activation 的资源占用。  
+- `TransformerBlock`：将 `AttentionBlock` 与 `SwiGluBlock` 串联为一个最小 transformer layer，用于度量层级关键路径与跨域协同开销。  
+- `TransformerPipeline`：将多个 `TransformerBlock` 按层级重复串联以放大系统瓶颈，便于对互联/存储参数进行敏感性分析。  
 
 #### 2.1.2 阶段类型（Stage Types）
 
-平台支持的阶段类型覆盖常见 AI 模型流水（摘要）：
+阶段类型用于“按流水阶段描述工作负载”，在 `--chiplet_model_path` 的模型 JSON 中逐条出现并被展开为命令（每项一句话）：
 
-- **计算类**：`token_prep`、`attention`、`softmax`、`layernorm`、`residual`、`activation`、`elementwise`、`postprocess`；
-- **CIM 映射类**：`gemm`、`rram_linear`、`moe_linear`（映射到 RRAM CIM 侧的 stage/execute/post 链路）；
-- **系统类**：`transfer`（Host↔Digital、Digital↔RRAM）、`moe_gating`、`moe_merge`、`sync`。
+| Stage Type | 一句话说明 |
+|---|---|
+| `token_prep` | 数字侧对 token/激活进行预处理与排布，为后续算子提供可执行的数据形态与规模参数。 |
+| `attention` | 数字侧注意力计算骨架（简化模型），用于表达 attention head 的核心计算占用与依赖关系。 |
+| `softmax` | 数字侧归一化阶段（softmax），以若干基础操作的组合建模其周期与带宽占用。 |
+| `layernorm` | 数字侧归一化阶段（layer normalization），用于刻画归一化/缩放/偏移带来的执行开销。 |
+| `residual` | 数字侧残差/加法类融合阶段，通常映射为 VPU/elementwise 占用以体现数据通路压力。 |
+| `elementwise` | 数字侧通用逐元素算子占位（add/mul/activation 等），用于统一表达大量轻量算子开销。 |
+| `activation` | 数字侧非线性激活阶段占位（如 GeLU/SwiGLU 的非线性部分），用于刻画非线性链路成本。 |
+| `postprocess` | 数字侧后处理阶段占位（重排、融合、输出整形等），用于承接跨域回传后的尾部开销。 |
+| `moe_gating` | MoE gating 阶段（打分、Top‑K 选择与可选的 Host 协同），用于驱动 expert 分发与并行性建模。 |
+| `moe_merge` | MoE merge 阶段（聚合/融合多个 expert 输出），用于刻画合并带来的额外周期与带宽占用。 |
+| `rram_linear` | 将线性层显式映射到 RRAM CIM（stage/execute/post 链路），用于刻画权重复用与 CIM 外设开销。 |
+| `moe_linear` | 将 MoE expert 的线性层映射到 RRAM CIM，并允许按 expert 分片配置以刻画负载不均与并行性。 |
+| `gemm` | 矩阵乘/线性层阶段的便捷别名，默认按 `rram_linear` 路径展开以快速表达 GEMM 工作量。 |
+| `transfer` | 数据搬移阶段（Host↔Digital 或 Digital↔RRAM），以 bytes、端点与 hop 统计驱动互联/DMA 占用。 |
+| `sync` | 同步/屏障阶段，用于显式切分串并行边界并控制关键路径依赖。 |
 
 该分层使“算子 → 阶段 → 资源域（Host/数字/RRAM/互联）”的映射关系清晰可控，便于在架构探索阶段开展结构化建模与对比实验。
 
