@@ -40,7 +40,7 @@ def render_svg(
 
     margin_left = 90
     margin_right = 30
-    margin_top = 80
+    margin_top = 40
     margin_bottom = 140
     chart_left = margin_left
     chart_right = width - margin_right
@@ -60,28 +60,37 @@ def render_svg(
         fills = (fills * (len(values) // len(fills) + 1))[: len(values)]
 
     font_stack = "-apple-system,BlinkMacSystemFont,Segoe UI,Arial"
-    title = "不同 NoC 拓扑下的 Chiplet 总周期对比（黑白图）"
-    subtitle = "指标：ChipletPlatform_cycles（越小越好）；工作负载：内置 Attention + MoE + SwiGLU；BookSim2 估算互联延迟"
+    x_axis_label = "NoC topology (category)"
+    y_axis_label = "Total cycles (clock cycles)"
 
     svg = []
     svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">')
     svg.append("<style>")
-    svg.append(f'.title{{font:700 20px {font_stack};fill:#111}}')
-    svg.append(f'.subtitle{{font:400 13px {font_stack};fill:#333}}')
     svg.append(f'.axis{{stroke:#000;stroke-width:1}}')
     svg.append(f'.grid{{stroke:#d0d0d0;stroke-width:1}}')
     svg.append(f'.tick{{font:12px {font_stack};fill:#111}}')
     svg.append(f'.label{{font:12px {font_stack};fill:#111}}')
+    svg.append(f'.axislabel{{font:13px {font_stack};fill:#111}}')
     svg.append(f'.value{{font:12px {font_stack};fill:#111}}')
     svg.append("</style>")
 
     svg.append(f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>')
-    svg.append(f'<text class="title" x="{margin_left}" y="34">{_escape(title)}</text>')
-    svg.append(f'<text class="subtitle" x="{margin_left}" y="56">{_escape(subtitle)}</text>')
 
     # Axes
     svg.append(f'<line class="axis" x1="{chart_left}" y1="{chart_top}" x2="{chart_left}" y2="{chart_bottom}"/>')
     svg.append(f'<line class="axis" x1="{chart_left}" y1="{chart_bottom}" x2="{chart_right}" y2="{chart_bottom}"/>')
+
+    # Axis labels (English-only, with units)
+    x_label_x = (chart_left + chart_right) / 2
+    x_label_y = height - 12
+    svg.append(
+        f'<text class="axislabel" x="{x_label_x:.2f}" y="{x_label_y:.2f}" text-anchor="middle">{_escape(x_axis_label)}</text>'
+    )
+    y_label_x = 26
+    y_label_y = (chart_top + chart_bottom) / 2
+    svg.append(
+        f'<text class="axislabel" x="{y_label_x:.2f}" y="{y_label_y:.2f}" text-anchor="middle" transform="rotate(-90 {y_label_x:.2f} {y_label_y:.2f})">{_escape(y_axis_label)}</text>'
+    )
 
     # Y grid + ticks
     for t in range(0, y_max + 1, tick_step):
@@ -137,4 +146,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
